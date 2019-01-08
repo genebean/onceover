@@ -1,0 +1,34 @@
+---
+# init:
+#   - SET
+#   - 'mkdir C:\ProgramData\PuppetLabs\code && exit 0'
+#   - 'mkdir C:\ProgramData\PuppetLabs\facter && exit 0'
+#   - 'mkdir C:\ProgramData\PuppetLabs\hiera && exit 0'
+#   - 'mkdir C:\ProgramData\PuppetLabs\puppet\var && exit 0'
+environment:
+  matrix:
+    - PUPPET_GEM_VERSION: ~> 6.0
+      RUBY_VERSION: "25"
+    - PUPPET_GEM_VERSION: ~> 6.0
+      RUBY_VERSION: 25-x64
+    - PUPPET_GEM_VERSION: ~> 6.0
+      RUBY_VERSION: "24"
+    - PUPPET_GEM_VERSION: ~> 6.0
+      RUBY_VERSION: 24-x64
+    - PUPPET_GEM_VERSION: ~> 6.0
+      RUBY_VERSION: "23"
+    - PUPPET_GEM_VERSION: ~> 6.0
+      RUBY_VERSION: 23-x64
+matrix:
+  fast_finish: false
+install:
+  - set PATH=C:\Ruby%RUBY_VERSION%\bin;%PATH%
+  - bundle install --jobs 4 --retry 2 --without system_tests
+  - type Gemfile.lock
+build: "off"
+test_script:
+  - bundle exec puppet -V
+  - ruby -v
+  - gem -v
+  - bundle -v
+  - bundle exec rake full_tests
