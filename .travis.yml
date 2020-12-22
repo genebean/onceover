@@ -17,3 +17,6 @@ matrix:
     # 2019.0 -> 2019.8
     - rvm: 2.5.8
       env: PUPPET_VERSION="~>6.0"
+    # 2021
+    - rvm: 2.7.1
+      env: PUPPET_VERSION="~>7.0"
